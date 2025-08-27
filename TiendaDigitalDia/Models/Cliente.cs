@@ -31,13 +31,14 @@ namespace TiendaDigitalDia.Models
 
         public override string ToString()
         {
-            return base.ToString() + string.Concat($"\nCliente ID: {ClienteID}",
-                                                   $"\nDni: {Dni}", 
-                                                   $"\nNombre: {Nombre}", 
-                                                   $"\nApellido: {Apellido}", 
-                                                   $"\nEmail: {Email}", 
-                                                   $"\nTelefono: {Telefono}", 
-                                                   $"\nFecha de Registro: {FechaRegistro}");
+            return string.Concat($"Cliente ID: {ClienteID}\n",
+                                 $"Dni: {Dni}\n", 
+                                 $"Nombre: {Nombre}\n", 
+                                 $"Apellido: {Apellido}\n", 
+                                 $"Email: {Email}\n", 
+                                 $"Telefono: {Telefono}\n", 
+                                 $"Fecha de Registro: {FechaRegistro}\n",
+                                 "---------------------------");
         }
     }
 }

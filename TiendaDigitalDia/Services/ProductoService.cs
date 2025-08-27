@@ -202,8 +202,8 @@ namespace TiendaDigitalDia.Services
                 if (productoSeleccionado != null)
                 {
                     Console.WriteLine("\nDatos actuales del producto: ");
-                    Console.WriteLine($"ID: {productoSeleccionado.ProductoID}, Nombre: {productoSeleccionado.Nombre}, " +
-                                      $"Categoría: {productoSeleccionado.Categoria}, Precio: {productoSeleccionado.Precio}, Stock: {productoSeleccionado.Stock}");
+                    Console.WriteLine($"\nID: {productoSeleccionado.ProductoID}\nNombre: {productoSeleccionado.Nombre}" +
+                                      $"\nCategoría: {productoSeleccionado.Categoria}\nPrecio: {productoSeleccionado.Precio}\nStock: {productoSeleccionado.Stock}");
                 }
 
                 Console.WriteLine("\nSeleccione el campo que desea modificar:");

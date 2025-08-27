@@ -83,5 +83,218 @@ namespace TiendaDigitalDia.Services
 
             } while (opcionSeguir != 2);
         }
+
+        public List<Cliente> ObtenerTodosLosDatosDeLosClientes()
+        {
+            List<Cliente> clientes = new List<Cliente>();
+
+            string query = @"SELECT clienteID, dni, nombre, apellido, email, telefono, fechaRegistro FROM Cliente";
+
+            using (SqlConnection connection = tiendaContext.GetConnection())
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Cliente cliente = new Cliente
+                    {
+                        ClienteID = reader.GetInt32(0),
+                        Dni = reader.GetString(1),
+                        Nombre = reader.GetString(2),
+                        Apellido = reader.GetString(3),
+                        Email = reader.GetString(4),
+                        Telefono = reader.GetString(5),
+                        FechaRegistro = reader.GetDateTime(6),
+                    };
+                    clientes.Add(cliente);
+                }
+             }
+            return clientes;
+        }
+
+        public List<Cliente> BuscarClientePorDni(string filtro)
+        {
+            List<Cliente> clientes = new List<Cliente>();
+
+            string query = @"SELECT ClienteID, Dni, Nombre, Apellido, Email, Telefono, FechaRegistro FROM Cliente WHERE Dni LIKE @dni";
+
+            using (SqlConnection connection = tiendaContext.GetConnection())
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@dni", $"%{filtro}%");
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Cliente cliente = new Cliente
+                    {
+                        ClienteID = reader.GetInt32(0),
+                        Dni = reader.GetString(1),
+                        Nombre = reader.GetString(2),
+                        Apellido = reader.GetString(3),
+                        Email = reader.GetString(4),
+                        Telefono = reader.GetString(5),
+                        FechaRegistro = reader.GetDateTime(6)
+                    };
+
+                    clientes.Add(cliente);
+                }
+
+                reader.Close();
+            }
+
+            return clientes;
+        }
+
+        public Cliente SeleccionarClientePorDni()
+        {
+            Console.Write("Ingrese el DNI o parte del DNI del cliente a buscar: ");
+            string buscarCliente = Console.ReadLine();
+
+            List<Cliente> listaClientes = BuscarClientePorDni(buscarCliente);
+
+            if (listaClientes.Count == 0)
+            {
+                Console.WriteLine("\nNo se encontro ningun cliente");
+                return null;
+            }
+
+            if (listaClientes.Count == 1)
+            {
+                return listaClientes[0];
+            }
+
+            Console.WriteLine("\nSe encontraron varios clientes, seleccione uno:");
+            for (int i = 0; i < listaClientes.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {listaClientes[i].Dni} - {listaClientes[i].Nombre} - {listaClientes[i].Apellido} - {listaClientes[i].Email} - {listaClientes[i].Telefono}");
+            }
+
+            int seleccion = GuardClause.GuardClause.ValidarOpcion(1, listaClientes.Count);
+            return listaClientes[seleccion - 1];
+        }
+
+        public void EditarCampoDelCliente(int id, string nombreCampo, object nuevoValor)
+        {
+            string query = $"UPDATE Cliente SET {nombreCampo} = @valor WHERE ClienteID = @id";
+
+            using (var connection = tiendaContext.GetConnection())
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@valor", nuevoValor);
+                command.Parameters.AddWithValue("@id", id);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+
+        public void ModificarClientePorDni()
+        {
+            int opcionSeguir;
+            do
+            {
+                Cliente clienteSeleccionado = SeleccionarClientePorDni();
+
+                if (clienteSeleccionado != null)
+                {
+                    Console.WriteLine("\nDatos actuales del cliente: ");
+                    Console.WriteLine($"\nID: {clienteSeleccionado.ClienteID}\nDNI: {clienteSeleccionado.Dni}" +
+                                      $"\nNombre: {clienteSeleccionado.Nombre}\nApellido: {clienteSeleccionado.Apellido}, " +
+                                      $"\nEmail: {clienteSeleccionado.Email}\nTelefono: {clienteSeleccionado.Telefono}, " +
+                                      $"\nFecha Registro: {clienteSeleccionado.FechaRegistro}");
+                }
+
+                Console.WriteLine("\nSeleccione el campo que desea modificar:");
+                string[] camposDeCliente = { "Dni", "Nombre", "Apellido", "Email", "Telefono" };
+
+                for (int i = 0; i < camposDeCliente.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {camposDeCliente[i]}");
+                }
+
+                Console.Write("Ingresar opcion: ");
+                int opcionDeCampo = GuardClause.GuardClause.ValidarOpcion(1, camposDeCliente.Length);
+
+                string campoSeleccionado = camposDeCliente[opcionDeCampo - 1];
+                string nuevoValor;
+
+                Console.Write($"\nIngrese nuevo valor para {campoSeleccionado}: ");
+                nuevoValor = Console.ReadLine();
+
+                EditarCampoDelCliente(clienteSeleccionado.ClienteID, campoSeleccionado, nuevoValor);
+
+                Console.WriteLine("\nCampo modificado correctamente");
+
+                Console.WriteLine("\n¿Desea modificar otro campo de este cliente?");
+                Console.WriteLine("1 - SI");
+                Console.WriteLine("2 - NO");
+                opcionSeguir = GuardClause.GuardClause.ValidarOpcion(1, 2);
+
+            } while (opcionSeguir != 2);
+        }
+
+        public void BorrarCliente(int id)
+        {
+            using (var connection = tiendaContext.GetConnection())
+            {
+                string query = "DELETE FROM Cliente WHERE ClienteID = @id";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", id);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+
+        public void BuscarYBorrarCliente()
+        {
+            int opcionSeguir;
+            do
+            {
+                Cliente clienteSeleccionado = SeleccionarClientePorDni();
+
+                if (clienteSeleccionado != null)
+                {
+                    Console.WriteLine("\nDatos actuales del cliente: ");
+                    Console.WriteLine(clienteSeleccionado.ToString());
+
+                    Console.WriteLine("\n¿Desea borrar este cliente?");
+                    Console.WriteLine("1 - SI");
+                    Console.WriteLine("2 - NO");
+                    Console.Write("Ingresar opción: ");
+
+                    int opcionBorrar = GuardClause.GuardClause.ValidarOpcion(1, 2);
+
+                    if (opcionBorrar == 1)
+                    {
+                        BorrarCliente(clienteSeleccionado.ClienteID);
+                        Console.WriteLine("\nCliente eliminado exitosamente");
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nCliente no eliminado");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\nNo se encontro un cliente con ese DNI");
+                }
+
+                Console.WriteLine("\n¿Desea borrar otro cliente?");
+                Console.WriteLine("1 - SI");
+                Console.WriteLine("2 - NO");
+                opcionSeguir = GuardClause.GuardClause.ValidarOpcion(1, 2);
+
+            } while (opcionSeguir != 2);
+        }
+
     }
 }
