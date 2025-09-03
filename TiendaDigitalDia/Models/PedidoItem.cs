@@ -27,11 +27,11 @@ namespace TiendaDigitalDia.Models
 
         public override string ToString()
         {
-            return base.ToString() + string.Concat($"\nPedido Iteme ID: {PedidoItemID}",
-                                                   $"\nPedido ID: {PedidoID}",
-                                                   $"\nProdcuto ID: {ProductoID}",
-                                                   $"\nCantidad: {Cantidad}",
-                                                   $"\nPrecio Unitario: {PrecioUnitario}");
+            return string.Concat($"Pedido Iteme ID: {PedidoItemID}\n",
+                                 $"Pedido ID: {PedidoID}\n",
+                                 $"Prodcuto ID: {ProductoID}\n",
+                                 $"Cantidad: {Cantidad}\n",
+                                 $"Precio Unitario: {PrecioUnitario}\n");
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TiendaDigitalDia.Interfaces;
 
 namespace TiendaDigitalDia.Models
 {
@@ -10,6 +11,7 @@ namespace TiendaDigitalDia.Models
     {
         public int CarritoID { get; set; }
         public int ClienteID { get; set; }
+        public IDescuentoStrategy DescuentoStrategy { get; set; }
 
         public Carrito() { }
 
@@ -21,8 +23,9 @@ namespace TiendaDigitalDia.Models
 
         public override string ToString()
         {
-            return base.ToString() + string.Concat($"\nCarrito ID: {CarritoID}", 
-                                                   $"\nCliente ID: {ClienteID}");
+            return string.Concat($"Carrito ID: {CarritoID}\n", 
+                                 $"Cliente ID: {ClienteID}\n",
+                                 "--------------------------------");
         }
     }
 }

@@ -11,28 +11,41 @@ namespace TiendaDigitalDia.Models
     {
         public int PedidoID { get; set; }
         public int ClienteID { get; set; }
-        public int EstadoID { get; set; }
+        public EstadoPedido Estado { get; set; }
         public DateTime FechaPedido { get; set; }
         public decimal TotalPedido { get; set; }
-        
+
+        private List<IObservador> observadores = new List<IObservador>();
+
         public Pedido() { }
 
-        public Pedido(int pedidoID, int clienteID, int estadoID, DateTime fechaPedido, decimal totalPedido)
+        public Pedido(int pedidoID, int clienteID, EstadoPedido estado, DateTime fechaPedido, decimal totalPedido)
         {
-            this.PedidoID = pedidoID;
-            this.ClienteID = clienteID;
-            this.EstadoID = estadoID;
-            this.FechaPedido = fechaPedido;
-            this.TotalPedido = totalPedido;
+            PedidoID = pedidoID;
+            ClienteID = clienteID;
+            Estado = estado;
+            FechaPedido = fechaPedido;
+            TotalPedido = totalPedido;
+        }
+
+        public void CambiarEstado(EstadoPedido nuevoEstado)
+        {
+            Estado = nuevoEstado;
+
+            foreach (var observador in observadores)
+            {
+                observador.Actualizar(this, Estado);
+            }
         }
 
         public override string ToString()
         {
-            return base.ToString() + string.Concat($"\nPedido ID: {PedidoID}",
-                                                   $"\nCliente ID: {ClienteID}",
-                                                   $"\nEstado ID: {EstadoID}",
-                                                   $"\nFecha Pedido: {FechaPedido}",
-                                                   $"\nTotal Pedido: {TotalPedido}");
+            return string.Concat($"Pedido ID: {PedidoID}\n",
+                                 $"Cliente ID: {ClienteID}\n",
+                                 $"Estado: {Estado.Descripcion}\n",
+                                 $"Fecha Pedido: {FechaPedido}\n",
+                                 $"Total Pedido: {TotalPedido}\n",
+                                 "--------------------------------");
         }
     }
 }

@@ -12,7 +12,7 @@ namespace TiendaDigitalDia
             ProductoService productoService = new ProductoService();
             ClienteService clienteService = new ClienteService();
             CarritoService carritoService = new CarritoService();
-
+            PedidoService pedidoService = new PedidoService();
             int opcion;
             do
             {
@@ -28,7 +28,10 @@ namespace TiendaDigitalDia
                         break;
                     case 3:
                         carritoService.GestionarCarrito();
-                        break; 
+                        break;
+                    case 4:
+                        pedidoService.MenuPedidos();
+                        break;
                 }
             } while (opcion != 0);
         }
@@ -39,10 +42,11 @@ namespace TiendaDigitalDia
             Console.WriteLine("1 - GESTIONAR PRODUCTOS");
             Console.WriteLine("2 - GESTIONAR CLIENTES");
             Console.WriteLine("3 - GESTIONAR CARRITO");
+            Console.WriteLine("4 - GESTIONAR PEDIDOS");
             Console.WriteLine("0 - SALIR");
             Console.WriteLine("##########################################\n");
 
-            int opcion = GuardClause.GuardClause.ValidarOpcion(0, 3);
+            int opcion = GuardClause.GuardClause.ValidarOpcion(0, 4);
             return opcion;
         }
 

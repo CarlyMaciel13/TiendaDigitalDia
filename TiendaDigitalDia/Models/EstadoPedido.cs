@@ -9,20 +9,20 @@ namespace TiendaDigitalDia.Models
     public class EstadoPedido
     {
         public int EstadoID { get; set; }
-        public string Descrpcion { get; set; }
+        public string Descripcion { get; set; }
 
         public EstadoPedido() { }
 
         public EstadoPedido(int estadoID, string descrpcion)
         {
             this.EstadoID = estadoID;
-            this.Descrpcion = descrpcion;
+            this.Descripcion = descrpcion;
         }
 
         public override string ToString()
         {
-            return base.ToString() + string.Concat($"\nEstado ID: {EstadoID}", 
-                                                   $"\nDescrpcion: {Descrpcion}");
+            return string.Concat($"Estado ID: {EstadoID}\n", 
+                                 $"Descripcion: {Descripcion}\n");
         }
     }
 }

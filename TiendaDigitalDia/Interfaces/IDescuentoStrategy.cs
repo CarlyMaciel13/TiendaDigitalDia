@@ -9,5 +9,6 @@ namespace TiendaDigitalDia.Interfaces
 {
     public interface IDescuentoStrategy
     {
+        decimal AplicarDescuento(decimal total);
     }
 }

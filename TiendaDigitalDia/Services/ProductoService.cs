@@ -27,14 +27,14 @@ namespace TiendaDigitalDia.Services
                 {
                     connection.Open();
 
-                    string query = @"INSERT INTO Producto (nombre, categoria, precio, stock) 
-                                     VALUES (@nombre, @categoria, @precio, @stock)";
+                    string query = @"INSERT INTO Producto (Nombre, Categoria, Precio, Stock) 
+                                     VALUES (@Nombre, @Categoria, @Precio, @Stock)";
 
                     SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@nombre", producto.Nombre);
-                    command.Parameters.AddWithValue("@categoria", producto.Categoria);
-                    command.Parameters.AddWithValue("@precio", producto.Precio);
-                    command.Parameters.AddWithValue("@stock", producto.Stock);
+                    command.Parameters.AddWithValue("@Nombre", producto.Nombre);
+                    command.Parameters.AddWithValue("@Categoria", producto.Categoria);
+                    command.Parameters.AddWithValue("@Precio", producto.Precio);
+                    command.Parameters.AddWithValue("@Stock", producto.Stock);
 
                     command.ExecuteNonQuery();
                     
@@ -87,7 +87,7 @@ namespace TiendaDigitalDia.Services
         {
             List<Producto> productos = new List<Producto>();
 
-            string query = @"SELECT productoID, nombre, categoria, precio, stock FROM Producto";
+            string query = @"SELECT ProductoID, Nombre, Categoria, Precio, Stock FROM Producto";
 
             using (SqlConnection connection = tiendaContext.GetConnection())
             {
@@ -178,7 +178,7 @@ namespace TiendaDigitalDia.Services
 
         public void EditarCampoDelProducto(int id, string nombreCampo, object nuevoValor)
         {
-            string query = $"UPDATE Producto SET {nombreCampo} = @valor WHERE productoID = @id";
+            string query = $"UPDATE Producto SET {nombreCampo} = @valor WHERE ProductoID = @id";
 
             using (var connection = tiendaContext.GetConnection())
             {
@@ -241,7 +241,7 @@ namespace TiendaDigitalDia.Services
         {
             using (var connection = tiendaContext.GetConnection())
             {
-                string query = "DELETE FROM Producto WHERE productoID = @id";
+                string query = "DELETE FROM Producto WHERE ProductoID = @id";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@id", id);
 

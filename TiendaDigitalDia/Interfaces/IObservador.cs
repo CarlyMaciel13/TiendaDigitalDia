@@ -9,5 +9,6 @@ namespace TiendaDigitalDia.Interfaces
 {
     public interface IObservador
     {
+        void Actualizar(Pedido pedido, EstadoPedido estado);
     }
 }

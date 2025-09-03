@@ -26,7 +26,7 @@ namespace TiendaDigitalDia.Services
                 {
                     connection.Open();
 
-                    string query = @"INSERT INTO Cliente (dni, nombre, apellido, email, telefono, fechaRegistro) 
+                    string query = @"INSERT INTO Cliente (Dni, Nombre, Apellido, Email, Telefono, FechaRegistro) 
                                      VALUES (@dni, @nombre, @apellido, @email, @telefono, @fechaRegistro)";
 
                     SqlCommand command = new SqlCommand(query, connection);
@@ -88,7 +88,7 @@ namespace TiendaDigitalDia.Services
         {
             List<Cliente> clientes = new List<Cliente>();
 
-            string query = @"SELECT clienteID, dni, nombre, apellido, email, telefono, fechaRegistro FROM Cliente";
+            string query = @"SELECT ClienteID, Dni, Nombre, Apellido, Email, Telefono, FechaRegistro FROM Cliente";
 
             using (SqlConnection connection = tiendaContext.GetConnection())
             {
@@ -205,9 +205,12 @@ namespace TiendaDigitalDia.Services
                 if (clienteSeleccionado != null)
                 {
                     Console.WriteLine("\nDatos actuales del cliente: ");
-                    Console.WriteLine($"\nID: {clienteSeleccionado.ClienteID}\nDNI: {clienteSeleccionado.Dni}" +
-                                      $"\nNombre: {clienteSeleccionado.Nombre}\nApellido: {clienteSeleccionado.Apellido}, " +
-                                      $"\nEmail: {clienteSeleccionado.Email}\nTelefono: {clienteSeleccionado.Telefono}, " +
+                    Console.WriteLine($"\nID: {clienteSeleccionado.ClienteID}" +
+                                      $"\nDNI: {clienteSeleccionado.Dni}" +
+                                      $"\nNombre: {clienteSeleccionado.Nombre}" +
+                                      $"\nApellido: {clienteSeleccionado.Apellido}, " +
+                                      $"\nEmail: {clienteSeleccionado.Email}" +
+                                      $"\nTelefono: {clienteSeleccionado.Telefono}, " +
                                       $"\nFecha Registro: {clienteSeleccionado.FechaRegistro}");
                 }
 
