@@ -138,3 +138,12 @@ INSERT INTO Producto (Nombre, Categoria, Precio, Stock) VALUES
 INSERT INTO Producto (Nombre, Categoria, Precio, Stock) VALUES 
 ('Reloj Inteligente Apple Watch', 'Electrónica', 400.00, 18);
 ```
+
+**Agregar datos a EstadoPedido**
+```sql
+INSERT INTO EstadoPedido (descripcion) VALUES 
+('Creado'),
+('Confirmado'),
+('Enviado'),
+('Entregado');
+```
