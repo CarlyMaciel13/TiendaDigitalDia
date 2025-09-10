@@ -1,20 +1,32 @@
-**Funcionamiento (HASTA EL MOMENTO)**
+**Funcionamiento**
 
-*Cargar Producto*
-  +	Se ingresa nombre, categoria, precio, stock.
-  +	Se guarda en la base de datos de la tabla “Producto”.
+*GESTION DE PRODUCTOS*
+  +	Agregar producto.
+  +	Mostrar productos.
+  +	Modificar producto.
+  +	Eliminar producto
 
-*Mostrar Producto*
-  +	Se muestra un listado completo de los productos.
+*GESTION DE CLIENTES*
+  +	Agregar cliente.
+  +	Mostrar todos los clientes.
+  +	Modificar cliente.
+  +	Eliminar cliente.
 
-*Modificar Producto*
-  +	Se busca el producto por nombre o parte del nombre.
-  +	Se muestra listado si hay multiples resultados para seleccionar.
-  +	Se puede modificar cualquier campo del producto.
+*GESTION DE CARRITO*
+  +	Agregar producto.
+  +	Quitar producto.
+  +	Ver carrito.
+  +	Finalizar compra.
+    + Sin descuento.
+    + Descuento fijo.
+    + Descuento porcentual.
+  +	Top 5 precios mas caros.
+  +	Ver cantidad de stock por categoria.
 
-*Borrar Producto*
-  +	Se busca el producto por nombre o parte del nombre.
-  +	Se confirma eliminacion y se borra el registro del producto.
+*GESTION DE PEDIDO*
+  +	Mostrar pedido.
+  +	Mostrar pedido por estado.
+  +	Elevar estado de un pedido.
 
 **Uso**
 1.	Clonar repo.
