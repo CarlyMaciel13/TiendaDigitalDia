@@ -19,7 +19,8 @@ namespace TiendaDigitalDia.Services
         {
             tiendaContext = new TiendaContext();
         }
-
+        #region BORRA EL CARRITO Y SUS ITEMS
+        // Borra un carrito y sus items de la base de datos
         public void BorrarCarrito(int carritoId)
         {
             using (SqlConnection connection = tiendaContext.GetConnection())
@@ -55,7 +56,10 @@ namespace TiendaDigitalDia.Services
                 }
             }
         }
+        #endregion
 
+        #region AGREGAR ITEMS AL CARRITO
+        // Agrega un producto al carrito con la cantidad indicada
         public void AgregarProductoAlCarrito(Carrito carrito)
         {
             ProductoService productoService = new ProductoService();
@@ -99,7 +103,10 @@ namespace TiendaDigitalDia.Services
 
             Console.WriteLine($"{cantidad} x {productoSeleccionado.Nombre} agregado al carrito exitosamente");
         }
+        #endregion
 
+        #region MUESTRA LOS ITEMS DEL CARRITO
+        // Muestra los items contenidos en el carrito
         public void MostrarCarrito(Carrito carrito)
         {
             List<CarritoItem> items = new List<CarritoItem>();
@@ -125,7 +132,10 @@ namespace TiendaDigitalDia.Services
                 }
             }
         }
+        #endregion
 
+        #region BORRAR ITEMS DEL CARRITO
+        // Quita un producto del carrito por su ID
         public void QuitarProductoDelCarrito(Carrito carrito)
         {
             MostrarCarrito(carrito);
@@ -152,7 +162,10 @@ namespace TiendaDigitalDia.Services
                 }
             }
         }
+        #endregion
 
+        #region FINALIZA LA COMPRA DEL CARRITO
+        // Finaliza la compra, calcula total y aplica descuentos
         public void FinalizarCompra(Carrito carrito)
         {
             decimal total = 0;
@@ -214,8 +227,10 @@ namespace TiendaDigitalDia.Services
             Console.WriteLine($"Pedido ID: {pedidoID}");
             Console.WriteLine($"Total a pagar (descuento aplicado): ${totalConDescuento}");
         }
+        #endregion
 
-
+        #region METODOS LINQ
+        // Devuelve los 5 productos más caros disponibles
         public List<Producto> Top5ProductosPorPrecio()
         {
             ProductoService productoService = new ProductoService();
@@ -225,6 +240,7 @@ namespace TiendaDigitalDia.Services
             return top5;
         }
 
+        // Muestra el stock total por cada categoría de producto
         public void StockPorCategoria()
         {
             ProductoService productoService = new ProductoService();
@@ -238,5 +254,6 @@ namespace TiendaDigitalDia.Services
                 Console.WriteLine($"{item.Categoria}: {item.TotalStock} unidades");
             }
         }
+        #endregion
     }
 }

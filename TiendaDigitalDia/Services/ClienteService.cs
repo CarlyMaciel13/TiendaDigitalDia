@@ -17,7 +17,8 @@ namespace TiendaDigitalDia.Services
         {
             tiendaContext = new TiendaContext();
         }
-
+        #region AGREGA UN CLIENTE
+        // Inserta un cliente nuevo en la base de datos
         public void AgregarClienteASQL(Cliente cliente)
         {
             try
@@ -45,6 +46,7 @@ namespace TiendaDigitalDia.Services
             }
         }
 
+        // Permite crear una nueva cuenta de cliente mediante consola
         public void CrearCuentaDeCliente()
         {
             int opcionSeguir;
@@ -83,7 +85,10 @@ namespace TiendaDigitalDia.Services
 
             } while (opcionSeguir != 2);
         }
+        #endregion
 
+        #region OBTIENE TODOS LOS DATOS DE LOS CLIENTES
+        // Devuelve la lista completa de clientes de la base de datos
         public List<Cliente> ObtenerTodosLosDatosDeLosClientes()
         {
             List<Cliente> clientes = new List<Cliente>();
@@ -114,7 +119,10 @@ namespace TiendaDigitalDia.Services
              }
             return clientes;
         }
+        #endregion
 
+        #region BUSCA CLIENTE POR DNI
+        // Busca clientes filtrando por DNI
         public List<Cliente> BuscarClientePorDni(string filtro)
         {
             List<Cliente> clientes = new List<Cliente>();
@@ -151,6 +159,7 @@ namespace TiendaDigitalDia.Services
             return clientes;
         }
 
+        // Permite seleccionar un cliente de la lista por DNI ingresado
         public Cliente SeleccionarClientePorDni()
         {
             Console.Write("Ingrese el DNI o parte del DNI del cliente a buscar: ");
@@ -178,7 +187,10 @@ namespace TiendaDigitalDia.Services
             int seleccion = GuardClause.GuardClause.ValidarOpcion(1, listaClientes.Count);
             return listaClientes[seleccion - 1];
         }
+        #endregion
 
+        #region EDITA CAMPO DE UN CLIENTE
+        // Modifica un campo especifico de un cliente en la base de datos
         public void EditarCampoDelCliente(int id, string nombreCampo, object nuevoValor)
         {
             string query = $"UPDATE Cliente SET {nombreCampo} = @valor WHERE ClienteID = @id";
@@ -195,6 +207,7 @@ namespace TiendaDigitalDia.Services
             }
         }
 
+        // Permite modificar datos de un cliente seleccionado
         public void ModificarClientePorDni()
         {
             int opcionSeguir;
@@ -242,7 +255,10 @@ namespace TiendaDigitalDia.Services
 
             } while (opcionSeguir != 2);
         }
+        #endregion
 
+        #region BORRAR UN CLIENTE
+        // Elimina un cliente de la base de datos por ID
         public void BorrarCliente(int id)
         {
             using (var connection = tiendaContext.GetConnection())
@@ -257,6 +273,7 @@ namespace TiendaDigitalDia.Services
             }
         }
 
+        // Permite buscar y eliminar un cliente por DNI
         public void BuscarYBorrarCliente()
         {
             int opcionSeguir;
@@ -298,6 +315,6 @@ namespace TiendaDigitalDia.Services
 
             } while (opcionSeguir != 2);
         }
-
+        #endregion
     }
 }

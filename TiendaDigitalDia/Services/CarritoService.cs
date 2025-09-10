@@ -18,7 +18,8 @@ namespace TiendaDigitalDia.Services
         {
             tiendaContext = new TiendaContext();
         }
-
+        #region MENU CARRITO
+        // Gestiona la logica principal del carrito: agregar, quitar, mostrar, finalizar compra
         public void GestionarCarrito()
         {
             Carrito carrito = IniciarCompraConDni();
@@ -72,7 +73,10 @@ namespace TiendaDigitalDia.Services
                 }
             }
         }
+        #endregion
 
+        #region CREA UN CARRITO POR DNI
+        // Inicia una compra solicitando DNI del cliente y creando un carrito
         public Carrito IniciarCompraConDni()
         {
             Console.WriteLine("Ingrese su DNI para iniciar la compra: ");
@@ -103,6 +107,7 @@ namespace TiendaDigitalDia.Services
                 }
             }
 
+            // Buscar si existe el cliente
             clienteExistente = clientes.FirstOrDefault(c => c.Dni == dni);
 
             if (clienteExistente == null)
@@ -130,5 +135,6 @@ namespace TiendaDigitalDia.Services
             Console.WriteLine($"Carrito creado para {clienteExistente.Nombre} {clienteExistente.Apellido} con ID: {carrito.CarritoID}");
             return carrito;
         }
+        #endregion
     }
 }

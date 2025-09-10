@@ -17,7 +17,8 @@ namespace TiendaDigitalDia.Services
         {
             tiendaContext = new TiendaContext();
         }
-
+        #region AGREGAR ITEMS DE PEDIDO A LA BASE
+        // Inserta los items de un pedido en la base de datos
         public void InsertarItemsPedido(int pedidoID, List<PedidoItem> listaItems)
         {
             using (var connection = tiendaContext.GetConnection())
@@ -39,5 +40,6 @@ namespace TiendaDigitalDia.Services
                 }
             }
         }
+        #endregion
     }
 }

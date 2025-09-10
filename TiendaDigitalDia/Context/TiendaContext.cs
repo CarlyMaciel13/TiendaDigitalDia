@@ -10,9 +10,6 @@ namespace TiendaDigitalDia.Context
 {
     public class TiendaContext
     {
-
-        private readonly string connectionString;
-
         public SqlConnection GetConnection()
         {
             string connStr = ConfigurationManager.ConnectionStrings["TiendaDB"].ConnectionString;

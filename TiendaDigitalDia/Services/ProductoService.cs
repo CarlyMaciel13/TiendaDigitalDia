@@ -19,6 +19,8 @@ namespace TiendaDigitalDia.Services
             tiendaContext = new TiendaContext();
         }
         #region CREA UN NUEVO PRODUCTO
+
+        // Inserta un producto en la base de datos
         public void AgregarProductoASQL(Producto producto)
         {
             try
@@ -47,6 +49,7 @@ namespace TiendaDigitalDia.Services
             }
         }
 
+        // Solicita al usuario los datos de un producto y lo agrega a la base
         public void CrearNuevoProducto()
         {
             int opcionSeguir;
@@ -83,6 +86,8 @@ namespace TiendaDigitalDia.Services
         #endregion
 
         #region OBTIENE TODOS LOS PRODUCTOS (SE AGREGARAN FILTROS)
+
+        // Devuelve todos los productos de la base de datos
         public List<Producto> ObtenerTodosLosProductos()
         {
             List<Producto> productos = new List<Producto>();
@@ -114,6 +119,8 @@ namespace TiendaDigitalDia.Services
         #endregion
 
         #region BUSCA EL PRODUCTO A EDITAR (CON FILTRO POR NOMBRE)
+
+        // Busca productos cuyo nombre contenga el filtro
         public List<Producto> BuscarProductoPorNombre(string filtro)
         {
             List<Producto> productos = new List<Producto>();
@@ -148,6 +155,7 @@ namespace TiendaDigitalDia.Services
             return productos;
         }
 
+        // Permite al usuario seleccionar un producto por nombre
         public Producto SeleccionarProductoPorNombre()
         {
             Console.Write("Ingrese el nombre o parte del nombre del producto a buscar: ");
@@ -176,6 +184,7 @@ namespace TiendaDigitalDia.Services
             return listaProductos[seleccion - 1];
         }
 
+        // Modifica un campo especifico de un producto en la base
         public void EditarCampoDelProducto(int id, string nombreCampo, object nuevoValor)
         {
             string query = $"UPDATE Producto SET {nombreCampo} = @valor WHERE ProductoID = @id";
@@ -192,6 +201,7 @@ namespace TiendaDigitalDia.Services
             }
         }
 
+        // Permite al usuario modificar los datos de un producto seleccionado
         public void ModificarProductoPorNombre()
         {
             int opcionSeguir;
@@ -237,6 +247,8 @@ namespace TiendaDigitalDia.Services
         #endregion
 
         #region BORRA EL PRODUCTO (CON FILTRO POR NOMBRE)
+
+        // Borra un producto de la base por su ID
         public void BorrarProducto(int id)
         {
             using (var connection = tiendaContext.GetConnection())
@@ -251,6 +263,7 @@ namespace TiendaDigitalDia.Services
             }
         }
 
+        // Permite al usuario buscar y borrar un producto por nombre
         public void BuscarYBorrarProducto()
         {
             int opcionSeguir;

@@ -13,12 +13,14 @@ namespace TiendaDigitalDia.Services
     {
         private readonly TiendaContext tiendaContext;
         EstadoPedidoService estadoPedidoService = new EstadoPedidoService();
+        ClienteService clienteService = new ClienteService();
 
         public PedidoService()
         {
             tiendaContext = new TiendaContext();
         }
-
+        #region MENU PEDIDOS
+        // Muestra el menu de pedidos con opciones para mostrar, filtrar por estado y elevar estado
         public void MenuPedidos()
         {
             int opcion;
@@ -26,11 +28,12 @@ namespace TiendaDigitalDia.Services
             {
                 Console.WriteLine("\n############## MENU PEDIDOS #############");
                 Console.WriteLine("1 - MOSTRAR PEDIDOS");
-                Console.WriteLine("2 - ELEVAR ESTADO DE UN PEDIDO");
+                Console.WriteLine("2 - MOSTRAR PEDIDOS POR ESTADO");
+                Console.WriteLine("3 - ELEVAR ESTADO DE UN PEDIDO");
                 Console.WriteLine("0 - VOLVER AL MENU PRINCIPAL");
                 Console.WriteLine("##########################################\n");
 
-                opcion = GuardClause.GuardClause.ValidarOpcion(0, 2);
+                opcion = GuardClause.GuardClause.ValidarOpcion(0, 3);
 
                 switch (opcion)
                 {
@@ -41,15 +44,26 @@ namespace TiendaDigitalDia.Services
                             Console.WriteLine(pedido);
                         }
                         break;
-
                     case 2:
+                        Console.Write("Ingrese el ID del estado a filtrar (1 al 4): ");
+                        int estadoID = GuardClause.GuardClause.ValidarOpcion(0, 4);
+
+                        List<Pedido> pedidosEstado = VerPedidos();
+                        List<Cliente> clientes = clienteService.ObtenerTodosLosDatosDeLosClientes();
+
+                        estadoPedidoService.ReportePedidosPorEstado(pedidosEstado, clientes, estadoID);
+                        break;
+                    case 3:
                         ElevarEstadoDePedido();
                         break;
                 }
 
             } while (opcion != 0);
         }
+        #endregion
 
+        #region AGREGAR PEDIDO A LA BASE
+        // Inserta un nuevo pedido en la base y devuelve el ID generado
         public int AgregarPedido(int clienteID, decimal total)
         {
             using (var connection = tiendaContext.GetConnection())
@@ -69,7 +83,10 @@ namespace TiendaDigitalDia.Services
                 return Convert.ToInt32(command.ExecuteScalar());
             }
         }
+        #endregion
 
+        #region VER TODOS LOS PEDIDOS
+        // Devuelve todos los pedidos de la base con su estado correspondiente
         public List<Pedido> VerPedidos()
         {
             List<Pedido> pedidos = new List<Pedido>();
@@ -100,13 +117,16 @@ namespace TiendaDigitalDia.Services
 
             return pedidos;
         }
+        #endregion
 
+        #region ELEVA ESTADOS DE PEDIDOS
+        // Permite al usuario seleccionar un pedido y elevar su estado al siguiente
         public void ElevarEstadoDePedido()
         {
             List<Pedido> pedidos = VerPedidos();
-            foreach (var p in pedidos)
+            foreach (var pedido in pedidos)
             {
-                Console.WriteLine($"ID: {p.PedidoID} - Cliente: {p.ClienteID} - Estado: {p.Estado.Descripcion}");
+                Console.WriteLine($"ID: {pedido.PedidoID} - Cliente: {pedido.ClienteID} - Estado: {pedido.Estado.Descripcion}");
             }
 
             Console.Write("\nIngrese el ID para elevar al estado siguiente: ");
@@ -127,5 +147,6 @@ namespace TiendaDigitalDia.Services
                 Console.WriteLine("ID no existente");
             }
         }
+        #endregion
     }
 }

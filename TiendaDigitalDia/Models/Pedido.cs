@@ -28,6 +28,7 @@ namespace TiendaDigitalDia.Models
             TotalPedido = totalPedido;
         }
 
+        // Cambia el estado del pedido y notifica a todos los observadores registrados
         public void CambiarEstado(EstadoPedido nuevoEstado)
         {
             Estado = nuevoEstado;

@@ -28,6 +28,7 @@ namespace TiendaDigitalDia.GuardClause
             return opcion;
         }
 
+        // Valida que la entrada contenga solo letras y espacios, repitiendo hasta que sea correcta
         public static string ValidarEspaciosYLetras()
         {
             string valor;
@@ -46,6 +47,7 @@ namespace TiendaDigitalDia.GuardClause
             return valor;
         }
 
+        // Valida que la entrada sea un numero decimal, repitiendo hasta que sea correcta
         public static decimal ValidarNumeroDecimal()
         {
             while (true)
@@ -56,6 +58,7 @@ namespace TiendaDigitalDia.GuardClause
             }
         }
 
+        // Valida que la entrada sea un numero entero, repitiendo hasta que sea correcta
         public static int ValidarNumeroEntero()
         {
             while (true)
